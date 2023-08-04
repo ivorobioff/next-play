@@ -16,7 +16,14 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+        <div className="h-16 bg-orange-100 flex items-center mb-2 pl-3 border-b border-b-orange-200">
+          <h1 className="text-xl drop-shadow-sm">Broken Jam</h1>
+        </div>
+        <div className="container mx-auto w-10/12">
+        {children}
+        </div>
+      </body>
     </html>
   )
 }
