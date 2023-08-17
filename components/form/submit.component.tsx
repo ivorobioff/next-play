@@ -1,4 +1,4 @@
-import Button, { ButtonProps } from "./button.component";
+import Button, { ButtonProps } from "../common/button.component";
 
 export interface SubmitProps extends ButtonProps {
 
@@ -6,6 +6,6 @@ export interface SubmitProps extends ButtonProps {
 
 export default function Submit(props: SubmitProps) {
   return (<div className="text-right">
-    <Button {...props} />
+    <Button {...props} type="submit" />
   </div>);
 }

@@ -3,7 +3,7 @@ import { ReactElement } from "react";
 
 export interface AuthPaneProps {
   title: string;
-  children: ReactElement;
+  children: ReactElement | ReactElement[];
 }
 
 export default function AuthPane({ title, children }: AuthPaneProps) {
