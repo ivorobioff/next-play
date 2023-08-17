@@ -1,8 +1,6 @@
 import { FieldPath, FieldPathValue, FieldValues, Path, UseFormReturn, Validate } from 'react-hook-form';
 import S from 'string';
 
-type InputValueType<I extends FieldValues> = FieldPathValue<I, FieldPath<I>>;
-
 export interface InputProps<I extends FieldValues> {
   name: Path<I>;
   useForm: UseFormReturn<I>;
@@ -11,8 +9,8 @@ export interface InputProps<I extends FieldValues> {
   optional?: boolean;
   minLength?: number;
   maxLength?: number;
-  validate?: Validate<InputValueType<I>, I> | Record<string, Validate<InputValueType<I>, I>>;
-  value?: InputValueType<I>;
+  validate?: Validate<FieldPathValue<I, FieldPath<I>>, I> | Record<string, Validate<FieldPathValue<I, FieldPath<I>>, I>>;
+  value?: FieldPathValue<I, FieldPath<I>>;
 }
 
 export default function Input<I extends FieldValues>({
