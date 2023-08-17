@@ -1,4 +1,4 @@
-import { FieldValues, Path, UseFormReturn } from 'react-hook-form';
+import { FieldValues, Path, UseFormReturn, Validate } from 'react-hook-form';
 import S from 'string';
 
 export interface InputProps<I extends FieldValues> {
@@ -7,23 +7,32 @@ export interface InputProps<I extends FieldValues> {
   type?: 'text' | 'password' | 'email';
   label?: string;
   optional?: boolean;
-  onChange?: (value: unknown) => void;
+  minLength?: number;
+  maxLength?: number;
+  validate?: Validate<string, I> | Record<string, Validate<string, I>>;
 }
 
-export default function Input<I extends FieldValues>({ 
-  type = 'text', 
-  name, 
-  label, 
-  onChange,
+export default function Input<I extends FieldValues>({
+  type = 'text',
+  name,
+  label,
   optional = false,
-  useForm
- }: InputProps<I>) {
+  useForm,
+  minLength,
+  maxLength,
+  validate
+}: InputProps<I>) {
   const { register, formState: { errors } } = useForm;
   return (<>
     <div className="py-2">
       <label className="block mb-1" htmlFor={`ctrl-${name}`}>{label || S(name).humanize().s}</label>
-      <input {...register(name, { required: !optional })} className="rounded w-full" />
-      { errors[name] && <p className="text-sm text-red-500 mt-1">It's required!</p>}
+      <input {...register(name, {
+        validate,
+        required: !optional && `It's required!`,
+        maxLength: maxLength && { value: maxLength, message: `The max length is ${maxLength}!`},
+        minLength: minLength && { value: minLength, message: `The min length is ${minLength}!`}
+      })} type={type} className="rounded w-full" />
+      {errors[name] && <p className="text-sm text-red-500 mt-1">{errors[name]?.message?.toString()}</p>}
     </div>
   </>);
 }
