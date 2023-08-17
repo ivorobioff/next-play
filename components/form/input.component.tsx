@@ -10,7 +10,6 @@ export interface InputProps<I extends FieldValues> {
   minLength?: number;
   maxLength?: number;
   validate?: Validate<FieldPathValue<I, FieldPath<I>>, I> | Record<string, Validate<FieldPathValue<I, FieldPath<I>>, I>>;
-  value?: FieldPathValue<I, FieldPath<I>>;
 }
 
 export default function Input<I extends FieldValues>({
@@ -21,15 +20,13 @@ export default function Input<I extends FieldValues>({
   useForm,
   minLength,
   maxLength,
-  validate,
-  value
+  validate
 }: InputProps<I>) {
   const { register, formState: { errors } } = useForm;
   return (<>
     <div className="py-2">
       <label className="block mb-1" htmlFor={`ctrl-${name}`}>{label || S(name).humanize().s}</label>
       <input {...register(name, {
-        value,
         validate,
         required: !optional && `It's required!`,
         maxLength: maxLength && { value: maxLength, message: `The max length is ${maxLength}!`},
